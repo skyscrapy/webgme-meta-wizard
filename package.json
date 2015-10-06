@@ -1,0 +1,33 @@
+{
+  "name": "webgme-meta-wizard",
+  "scripts": {
+    "start": "node app.js",
+    "app":"set NODE_ENV=app&& node app.js",
+    "app_nix":"NODE_ENV=app node app.js",
+    "test": "node ./node_modules/mocha/bin/mocha --recursive test"
+  },
+  "version": "1.0.0",
+  "dependencies": {
+    "webgme": "latest"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "rimraf": "^2.4.0",
+    "chai": "^3.0.0"
+  },
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/SuperStevenZ/webgme-meta-wizard.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SuperStevenZ/webgme-meta-wizard/issues"
+  },
+  "homepage": "https://github.com/SuperStevenZ/webgme-meta-wizard#readme",
+  "description": ""
+}
