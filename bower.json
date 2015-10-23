@@ -1,0 +1,13 @@
+{
+  "name": "webgme-meta-wizard",
+  "description": "",
+  "version": "1.0.0",
+  "homepage": "https://github.com/SuperStevenZ/webgme-meta-wizard#readme",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "1.4.x",
+    "angular-mocks": "1.4.x",
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.1.1"
+  }
+}

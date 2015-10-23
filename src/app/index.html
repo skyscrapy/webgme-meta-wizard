@@ -1,27 +1,29 @@
-<html>
+<html lang="en" ng-app>
 <head>
-    <script type="text/javascript">
-        var myInit = function () {
-            console.log('myInit function was called');
+  <meta charset="utf-8">
+  <title>Web GME Meta Wizard</title>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="css/app.css">
+  <script src="bower_components/angular/angular.js"></script>
+  <script type="text/javascript">
+    var myInit = function () {
+      console.log('myInit function was called');
 
-            // you can use GME.classes.Client from this point
-            console.log(GME);
+      // you can use GME.classes.Client from this point
+      console.log(GME);
 
-            // TODO: add some client examples
-        };
+      // TODO: add some client examples
+    };
+  </script>
 
-    </script>
-
-    <script data-main="/extlib/node_modules/webgme/dist/webgme.classes.build.js" src="/extlib/node_modules/webgme/src/client/lib/require/require.min.js"></script>
+  <script data-main="/extlib/node_modules/webgme/dist/webgme.classes.build.js"
+          src="/extlib/node_modules/webgme/src/client/lib/require/require.min.js"></script>
 
 </head>
 
 <body on-gme-init="myInit()">
 
-Test page.
-See console for messages.
+<p>AngularJS framework for {{'webgme-meta-wizard' + ' deployed'}}!</p>
 
-
-<a href="/logout">Logout</a>
 </body>
 </html>

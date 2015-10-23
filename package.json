@@ -1,19 +1,31 @@
 {
   "name": "webgme-meta-wizard",
   "scripts": {
+    "postinstall": "bower install",
+    "prestart": "npm install",
     "start": "node app.js",
     "app":"set NODE_ENV=app&& node app.js",
     "app_nix":"NODE_ENV=app node app.js",
-    "test": "node ./node_modules/mocha/bin/mocha --recursive test"
+    "pretest": "npm install",
+    "test": "node node_modules/karma/bin/karma start test/karma.conf.js",
+    "preupdate-webdriver": "npm install",
+    "update-webdriver": "webdriver-manager update",
+    "preprotractor": "npm run update-webdriver",
+    "protractor": "protractor test/protractor-conf.js"
   },
   "version": "1.0.0",
   "dependencies": {
     "webgme": "latest"
   },
   "devDependencies": {
-    "mocha": "^2.2.5",
     "rimraf": "^2.4.0",
-    "chai": "^3.0.0"
+    "karma-firefox-launcher": "^0.1.3",
+    "karma-jasmine": "~0.1.0",
+    "protractor": "^2.1.0",
+    "http-server": "^0.6.1",
+    "tmp": "0.0.23",
+    "bower": "^1.3.1",
+    "shelljs": "^0.2.6"
   },
   "main": "app.js",
   "directories": {
