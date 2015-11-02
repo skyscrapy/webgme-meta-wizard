@@ -1,10 +1,10 @@
-<html lang="en" ng-app>
+<html lang="en" ng-app="webgme_wizard">
 <head>
   <meta charset="utf-8">
   <title>Web GME Meta Wizard</title>
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="css/app.css">
-  <script src="bower_components/angular/angular.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
   <script type="text/javascript">
     var myInit = function () {
       console.log('myInit function was called');
@@ -18,12 +18,39 @@
 
   <script data-main="/extlib/node_modules/webgme/dist/webgme.classes.build.js"
           src="/extlib/node_modules/webgme/src/client/lib/require/require.min.js"></script>
-
+  <script>
+		var app = angular.module('webgme_wizard', []);
+		app.controller('FormCtrl', function ($scope, $http) {
+			$scope.data = {
+				prjectname: "default",
+				branchname: "default",
+			};
+			$scope.submitForm = function() {
+				console.log("sending data");
+			};
+		});
+   </script>
 </head>
 
 <body on-gme-init="myInit()">
 
-<p>AngularJS framework for {{'webgme-meta-wizard' + ' deployed'}}!</p>
+<p align="center">WebGme-Wizard Questions</p>
+<hr>
+	<div ng-app = "webgme_wizard">
+		<form name="projectForm" ng-controller="FormCtrl" action="#" ng-submit="submitForm()">
+		  <label>What is your domain?</label>
+		  <br>
+		  <input type="text" ng-model="form.projectName" placeholder="Enter name of project here">     
+		  <p>Your domain is {{form.projectName}}!</p>
+		<hr>
+		  <label>What is the name of a new branch?</label>
+		  <br>
+		  <input type="text" ng-model="form.branchName" placeholder="Enter name of branch here">
+		  <p>Your branch is {{form.branchName}}!</p>
+		<hr>
+		  <input type="submit" ngClick="Submit">
+		</form>  
+	</div>
 
 </body>
 </html>
