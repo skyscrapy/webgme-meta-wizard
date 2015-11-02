@@ -8,34 +8,17 @@
   <script type="text/javascript">
     var myInit = function () {
       console.log('myInit function was called');
-
       // you can use GME.classes.Client from this point
-      console.log(GME);
-
+      console.log(GME);  
       // TODO: add some client examples
     };
   </script>
-
-  <script data-main="/extlib/node_modules/webgme/dist/webgme.classes.build.js"
-          src="/extlib/node_modules/webgme/src/client/lib/require/require.min.js"></script>
-  <script>
-		var app = angular.module('webgme_wizard', []);
-		app.controller('FormCtrl', function ($scope, $http) {
-			$scope.data = {
-				prjectname: "default",
-				branchname: "default",
-			};
-			$scope.submitForm = function() {
-				console.log("sending data");
-			};
-		});
-   </script>
+  <script src="controller.js"></script>
 </head>
 
 <body on-gme-init="myInit()">
-
 <p align="center">WebGme-Wizard Questions</p>
-<hr>
+	<hr>
 	<div ng-app = "webgme_wizard">
 		<form name="projectForm" ng-controller="FormCtrl" action="#" ng-submit="submitForm()">
 		  <label>What is your domain?</label>
@@ -47,6 +30,37 @@
 		  <br>
 		  <input type="text" ng-model="form.branchName" placeholder="Enter name of branch here">
 		  <p>Your branch is {{form.branchName}}!</p>
+		<hr>
+		  <label>Do you wanna add/modify/delete a meta node?</label>
+		  <br>
+		  <input type="radio" ng-model="form.manageMeta" value="Add"> Add
+		  <input type="radio" ng-model="form.manageMeta" value="Modify"> Modify
+		  <input type="radio" ng-model="form.manageMeta" value="Delete"> Delete
+		<hr>
+		  <label>You wanna add attribute or edit attribute?</label> 
+		  <br>
+		  <input type="radio" ng-model="form.manageAttr" value="Add">Add
+		  <input type="radio" ng-model="form.manageAttr" value="Modify">Modify
+		<hr>
+		  <label>Enter attribute name</label>
+		  <br>
+		  <input type="text" ng-model="form.addAttrName" placeholder="Enter name of Attribute">
+		  <br>
+		  <label>Enter value</label>
+		  <br>
+		  <input type="text" ng-model="form.addAttrVal" placeholder="Enter value of Attribute">
+		  <br>
+		<hr>
+		<label>Select the attribute</label>
+		  <br>
+		  <select>
+		    <option value="state">state</option>
+		  </select>
+		  <br>
+		  <label>Enter value</label>
+		  <br>
+		  <input type="text" ng-model="form.editAttrVal" placeholder="Enter value of Attribute">
+		  <br>
 		<hr>
 		  <input type="submit" ngClick="Submit">
 		</form>  
