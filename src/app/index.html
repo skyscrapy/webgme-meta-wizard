@@ -1,109 +1,70 @@
-<html lang="en" ng-app>
+<html lang="en" ng-app="webgme_wizard">
 <head>
   <meta charset="utf-8">
   <title>Web GME Meta Wizard</title>
-  <script src="bower_components/angular/angular.js"></script>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="css/app.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
   <script type="text/javascript">
     var myInit = function () {
       console.log('myInit function was called');
-
       // you can use GME.classes.Client from this point
-      console.log('GME:');
-      console.log(GME);
-
+      console.log(GME);  
       // TODO: add some client examples
-      var client = new GME.classes.Client(GME.gmeConfig);
-      console.log('client api:');
-      console.log(client);
-
-      client.connectToDatabase(function (err) {
-        if (err) {
-          console.log(err);
-        }
-
-//        delete project
-//        client.deleteProject("guest+MyFirstWebGME", function (err) {
-//          if(err) {
-//            console.log(err);
-//          }
-//        });
-
-//        create project
-//        client.createProject("MyFirstWebGME", 'guest', function (err) {
-//          if (err) {
-//            console.log(err);
-//          }
-//
-//          client.getCommits('guest+MyFirstWebGME', (new Date()).getTime(), 10, function (err, commits) {
-//            if (err) {
-//              console.log(err);
-//            }
-//            console.log(commits);
-//          });
-//
-//          client.createBranch('guest+MyFirstWebGME', 'branch1', '#123', function (err) {
-//            if (err) {
-//              console.log(err);
-//            }
-//          });
-//        });
-
-        var parameters = {
-          seedName: 'guest+seed',
-          seedBranch: 'master',
-          projectName: 'wtf'
-        };
-        client.seedProject(parameters, function (err, result) {
-          if (err) {
-            console.log(err);
-          }
-        });
-
-
-        console.log("projects:");
-        client.getProjectsAndBranches(false, function (err, projects) {
-          if (err) {
-            console.log(err);
-          }
-          console.log(projects);
-          for (var i = 0; i < projects.length; i++) {
-            console.log(projects[i]);
-          }
-        });
-
-//        client.selectProject('guest+MyFirstWebGME', null, function (err) {
-//          if (err) {
-//            console.log(err);
-//          }
-
-//          console.log("meta-nodes api:");
-//          var metaNodes = client.getAllMetaNodes();
-//          console.log(metaNodes[0]);
-//
-//          console.log("manipulate one node:");
-//          var nodeId = '/1';
-//          var nodeObj = client.getNode(nodeId);
-//          if(!nodeObj) {
-//            console.log('node not loaded!');
-//          }
-//          console.log(nodeObj.getAttribute('name'));
-
-          //client.setAttributes(nodeId, 'name', 'newName', 'commit message here?')
-
-//        });
-
-      });
-
     };
   </script>
-
-  <script type="text/javascript" src="/extlib/node_modules/webgme/dist/webgme.classes.build.js"></script>
-
+  <script src="controller.js"></script>
 </head>
 
 <body on-gme-init="myInit()">
-
-<p>AngularJS framework for {{'webgme-meta-wizard' + ' deployed'}}!</p>
+<p align="center">WebGme-Wizard Questions</p>
+	<hr>
+	<div ng-app = "webgme_wizard">
+		<form name="projectForm" ng-controller="FormCtrl" action="#" ng-submit="submitForm()">
+		  <label>What is your domain?</label>
+		  <br>
+		  <input type="text" ng-model="form.projectName" placeholder="Enter name of project here">     
+		  <p>Your domain is {{form.projectName}}!</p>
+		<hr>
+		  <label>What is the name of a new branch?</label>
+		  <br>
+		  <input type="text" ng-model="form.branchName" placeholder="Enter name of branch here">
+		  <p>Your branch is {{form.branchName}}!</p>
+		<hr>
+		  <label>Do you wanna add/modify/delete a meta node?</label>
+		  <br>
+		  <input type="radio" ng-model="form.manageMeta" value="Add"> Add
+		  <input type="radio" ng-model="form.manageMeta" value="Modify"> Modify
+		  <input type="radio" ng-model="form.manageMeta" value="Delete"> Delete
+		<hr>
+		  <label>You wanna add attribute or edit attribute?</label> 
+		  <br>
+		  <input type="radio" ng-model="form.manageAttr" value="Add">Add
+		  <input type="radio" ng-model="form.manageAttr" value="Modify">Modify
+		<hr>
+		  <label>Enter attribute name</label>
+		  <br>
+		  <input type="text" ng-model="form.addAttrName" placeholder="Enter name of Attribute">
+		  <br>
+		  <label>Enter value</label>
+		  <br>
+		  <input type="text" ng-model="form.addAttrVal" placeholder="Enter value of Attribute">
+		  <br>
+		<hr>
+		<label>Select the attribute</label>
+		  <br>
+		  <select>
+		    <option value="state">state</option>
+		  </select>
+		  <br>
+		  <label>Enter value</label>
+		  <br>
+		  <input type="text" ng-model="form.editAttrVal" placeholder="Enter value of Attribute">
+		  <br>
+		<hr>
+		  <input type="submit" ngClick="Submit">
+		</form>  
+	</div>
 
 </body>
 </html>
