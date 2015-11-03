@@ -2,22 +2,102 @@
 <head>
   <meta charset="utf-8">
   <title>Web GME Meta Wizard</title>
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-  <link rel="stylesheet" href="css/app.css">
   <script src="bower_components/angular/angular.js"></script>
   <script type="text/javascript">
     var myInit = function () {
       console.log('myInit function was called');
 
       // you can use GME.classes.Client from this point
+      console.log('GME:');
       console.log(GME);
 
       // TODO: add some client examples
+      var client = new GME.classes.Client(GME.gmeConfig);
+      console.log('client api:');
+      console.log(client);
+
+      client.connectToDatabase(function (err) {
+        if (err) {
+          console.log(err);
+        }
+
+//        delete project
+//        client.deleteProject("guest+MyFirstWebGME", function (err) {
+//          if(err) {
+//            console.log(err);
+//          }
+//        });
+
+//        create project
+//        client.createProject("MyFirstWebGME", 'guest', function (err) {
+//          if (err) {
+//            console.log(err);
+//          }
+//
+//          client.getCommits('guest+MyFirstWebGME', (new Date()).getTime(), 10, function (err, commits) {
+//            if (err) {
+//              console.log(err);
+//            }
+//            console.log(commits);
+//          });
+//
+//          client.createBranch('guest+MyFirstWebGME', 'branch1', '#123', function (err) {
+//            if (err) {
+//              console.log(err);
+//            }
+//          });
+//        });
+
+        var parameters = {
+          seedName: 'guest+seed',
+          seedBranch: 'master',
+          projectName: 'wtf'
+        };
+        client.seedProject(parameters, function (err, result) {
+          if (err) {
+            console.log(err);
+          }
+        });
+
+
+        console.log("projects:");
+        client.getProjectsAndBranches(false, function (err, projects) {
+          if (err) {
+            console.log(err);
+          }
+          console.log(projects);
+          for (var i = 0; i < projects.length; i++) {
+            console.log(projects[i]);
+          }
+        });
+
+//        client.selectProject('guest+MyFirstWebGME', null, function (err) {
+//          if (err) {
+//            console.log(err);
+//          }
+
+//          console.log("meta-nodes api:");
+//          var metaNodes = client.getAllMetaNodes();
+//          console.log(metaNodes[0]);
+//
+//          console.log("manipulate one node:");
+//          var nodeId = '/1';
+//          var nodeObj = client.getNode(nodeId);
+//          if(!nodeObj) {
+//            console.log('node not loaded!');
+//          }
+//          console.log(nodeObj.getAttribute('name'));
+
+          //client.setAttributes(nodeId, 'name', 'newName', 'commit message here?')
+
+//        });
+
+      });
+
     };
   </script>
 
-  <script data-main="/extlib/node_modules/webgme/dist/webgme.classes.build.js"
-          src="/extlib/node_modules/webgme/src/client/lib/require/require.min.js"></script>
+  <script type="text/javascript" src="/extlib/node_modules/webgme/dist/webgme.classes.build.js"></script>
 
 </head>
 
