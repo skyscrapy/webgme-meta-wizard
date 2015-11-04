@@ -1,10 +1,10 @@
-<html lang="en"  ng-app="webgmeWizard">
+<html lang="en" ng-app="webgmeWizard">
 <head>
   <meta charset="utf-8">
   <title>Web GME Meta Wizard</title>
-	<script type="text/javascript" src="/extlib/node_modules/webgme/dist/webgme.classes.build.js"></script>
+  <script type="text/javascript" src="/extlib/node_modules/webgme/dist/webgme.classes.build.js"></script>
   <script src="bower_components/angular/angular.js"></script>
-	<script src="js/controller.js"></script>
+  <script src="js/controller.js"></script>
 
   <script type="text/javascript">
     var myInit = function () {
@@ -18,75 +18,80 @@
 </head>
 
 <body on-gme-init="myInit()">
-<p align="center">WebGME-Wizard Questions</p>
-	<hr>
-	<div>
-		<!-- create project&branch -->
-		<form name="projectForm" ng-controller="projectCtrl" action="#" ng-submit="submitForm()">
-		  <label>What is your domain?</label>
-		  <br>
-		  <input type="text" ng-model="projectName" placeholder="Enter name of project here">
-		  <p>Your domain is: <b>{{projectName}}</b></p>
-			<input type="submit" value="Create domain">
-		</form>
+<p align="center">WebGME-Wizard</p>
+<hr>
+<div>
+  <!-- create project&branch -->
+  <form name="projectForm" ng-controller="projectCtrl" action="#" ng-submit="submitForm()">
+    <label>What is your new domain?</label>
+    <br>
+    <input type="text" ng-model="projectName" placeholder="Enter name of project here">
 
-		<hr>
-		<!-- create branch from existing project -->
-		<form name="branchForm" ng-controller="branchCtrl" action="#" ng-submit="submitForm()">
-			<!-- list all projects-->
-			<div>
-				<ul>
-					<li ng-repeat="project in projects">
-						<span>{{project.name}}</span>
-					</li>
-				</ul>
-			</div>
-			<label>Which project do you want to add a branch?</label>
-			<br>
-			<input type="text" ng-model="selectedProject" placeholder="Enter name of project here">
-			<br>
-		  <label>What is the name of a new branch?</label>
-		  <br>
-		  <input type="text" ng-model="branchName" placeholder="Enter name of branch here">
-		  <p>Your want to add a new branch <b>{{branchName}}</b> to <b>{{selectedProject}}</b> project</p>
-			<input type="submit" value="Create branch">
-		</form>
-		<form name="attributesForm" ng-controller="attributesCtrl" action="#" ng-submit="submitForm()">
-		<hr>
-		  <label>Do you wanna add/modify/delete a meta node?</label>
-		  <br>
-		  <input type="radio" ng-model="form.manageMeta" value="Add"> Add
-		  <input type="radio" ng-model="form.manageMeta" value="Modify"> Modify
-		  <input type="radio" ng-model="form.manageMeta" value="Delete"> Delete
-		<hr>
-		  <label>You wanna add attribute or edit attribute?</label>
-		  <br>
-		  <input type="radio" ng-model="form.manageAttr" value="Add">Add
-		  <input type="radio" ng-model="form.manageAttr" value="Modify">Modify
-		<hr>
-		  <label>Enter attribute name</label>
-		  <br>
-		  <input type="text" ng-model="form.addAttrName" placeholder="Enter name of Attribute">
-		  <br>
-		  <label>Enter value</label>
-		  <br>
-		  <input type="text" ng-model="form.addAttrVal" placeholder="Enter value of Attribute">
-		  <br>
-		<hr>
-		<label>Select the attribute</label>
-		  <br>
-		  <select>
-		    <option value="state">state</option>
-		  </select>
-		  <br>
-		  <label>Enter value</label>
-		  <br>
-		  <input type="text" ng-model="form.editAttrVal" placeholder="Enter value of Attribute">
-		  <br>
-		<hr>
-		  <input type="submit" ng-click="Submit">
-		</form>
-	</div>
+    <p>Domain name: <b>{{projectName}}</b></p>
+    <input type="submit" value="Create domain">
+  </form>
+  <hr>
+
+  <!-- create branch from existing project -->
+  <form name="branchForm" ng-controller="branchCtrl" action="#" ng-submit="submitForm()">
+    <label>I want to create a branch from project </label>
+    <select ng-model="projectName">
+      <option ng-repeat="project in projects">{{project.name}}</option>
+    </select>
+    <label> with the branch name</label>
+    <input type="text" ng-model="branchName" placeholder="Enter name of branch here">
+
+    <p>Your want to add a new branch <b>{{branchName}}</b> in <b>{{projectName}}</b> project</p>
+    <input type="submit" value="Create branch">
+  </form>
+  <hr>
+
+  <!-- modify a node in selected branch, project -->
+  <form name="attributesForm" ng-controller="attributesCtrl" action="#" ng-submit="submitForm()">
+    <p>
+      <label>I want to </label>
+      <select ng-model="selectedOperation">
+        <option value="add">add</option>
+        <option value="modify">modify</option>
+        <option value="delete">delete</option>
+      </select>
+      <label> a node from project </label>
+      <select ng-model="selectedProject">
+        <option ng-repeat="project in projects">{{project.name}}</option>
+      </select>
+      <label> branch </label>
+    </p>
+    <input type="submit" value="Apply operation">
+    <hr>
+
+    <label>You wanna add attribute or edit attribute?</label>
+    <br>
+    <input type="radio" ng-model="form.manageAttr" value="Add">Add
+    <input type="radio" ng-model="form.manageAttr" value="Modify">Modify
+    <hr>
+    <label>Enter attribute name</label>
+    <br>
+    <input type="text" ng-model="form.addAttrName" placeholder="Enter name of Attribute">
+    <br>
+    <label>Enter value</label>
+    <br>
+    <input type="text" ng-model="form.addAttrVal" placeholder="Enter value of Attribute">
+    <br>
+    <hr>
+    <label>Select the attribute</label>
+    <br>
+    <select>
+      <option value="state">state</option>
+    </select>
+    <br>
+    <label>Enter value</label>
+    <br>
+    <input type="text" ng-model="form.editAttrVal" placeholder="Enter value of Attribute">
+    <br>
+    <hr>
+    <input type="submit" ng-click="Submit">
+  </form>
+</div>
 
 </body>
 </html>
