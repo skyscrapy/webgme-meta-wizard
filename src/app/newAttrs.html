@@ -1,0 +1,77 @@
+<html lang="en" ng-app="webgmeWizard">
+<head>
+  <meta charset="utf-8">
+  <title>Web GME Meta Wizard</title>
+  <script type="text/javascript" src="/extlib/node_modules/webgme/dist/webgme.classes.build.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="js/controller.js"></script>
+  <link rel="stylesheet" href="css/app.css" type="text/css">
+  <script type="text/javascript">
+    var myInit = function () {
+      console.log('myInit function was called');
+      // you can use GME.classes.Client from this point
+      console.log(GME);
+      // TODO: add some client examples
+    };
+  </script>
+
+</head>
+
+<body on-gme-init="myInit()" ng-controller="attrsCtrl">
+<div>
+	<img src="img/hearder_logo.png" alt="logo" style="width:100px;height:100px;" >
+	<font size="25" color="red" bold="true">WebGME-Wizard</font>
+	<label style="font-size:25px;margin-left:30px;align:right">Your Domain--Your Branch</label>
+</div>
+<hr>
+<div style="height:50px;">
+</div>
+
+<div style="height:350px;">
+	<div style="display:inline-block;width:150px;">
+	</div>
+	<div style="display:inline-block; height:350px; overflow:auto;">
+	  <table class="bordered" style="table-layout:fixed; width:400px;">
+		<tr style="width:80px;overflow: scroll;">
+			<th>No.
+			</th>
+			<th>Name
+			</th>
+		</tr>
+		<tr ng-repeat="model in models" style="width:80px;overflow: hidden;">
+			<td>{{$index + 1}}
+			</td>
+			<td>
+				<button class="btnNext" ng-click="getAttr($index)">{{model.modelName}}</button>
+			</td>
+		</tr>
+	  </table>
+	</div>
+	<div style="display:inline-block;width:100px;">
+	</div>
+	<div style="display:inline-block;height:350px; overflow:auto;">
+		<table class="bordered" style="table-layout:fixed; width:400px;">
+			<tr>
+				<th >Attribute Name
+				</th>
+				<th >Attribute Value
+				</th>
+			</tr>
+			<tr ng-repeat="attr in attrs" style="width:80px;overflow: hidden;">
+				<td>
+					{{attrList[$index]}}
+				</td>
+				<td>
+					<input type="text" placeholder="{{attr.attrVal}}">
+					<button class="btnSet" ng-click="setAttrVal($index)"></button>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="clear:both"></div>
+</div>
+<div align="right">
+		 <button class="btnNext" ng-click="submitForm()">Next</button>
+	</div>
+</body>
+</html>
