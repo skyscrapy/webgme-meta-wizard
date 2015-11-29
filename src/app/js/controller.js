@@ -112,7 +112,6 @@ app.controller('attributesCtrl', function ($scope) {
     $scope.submitForm = function () {
         /* create project from seed*/
         var projectId = 'guest+' + $scope.selectedProject;
-
         client.connectToDatabase(function (err) {
             if (err) {
                 console.log(err);

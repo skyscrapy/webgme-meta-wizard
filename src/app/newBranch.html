@@ -1,0 +1,44 @@
+<html lang="en" ng-app="webgmeWizard">
+<head>
+  <meta charset="utf-8">
+  <title>Web GME Meta Wizard</title>
+  <script type="text/javascript" src="/extlib/node_modules/webgme/dist/webgme.classes.build.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="js/controller.js"></script>
+  <link rel="stylesheet" href="css/app.css" type="text/css">
+  <script type="text/javascript">
+    var myInit = function () {
+      console.log('myInit function was called');
+      // you can use GME.classes.Client from this point
+      console.log(GME);
+      // TODO: add some client examples
+    };
+  </script>
+
+</head>
+
+<body on-gme-init="myInit()">
+<div align="left">
+	<img src="img/hearder_logo.png" alt="logo" style="width:100px;height:100px;" >
+	<font size="35" color="red" bold="true">WebGME-Wizard</font>
+	<label style="font-size:25px;margin-left:30px;align:right">Your Domain</label>
+</div>
+<hr>
+
+<div height="100"></div>
+<div align="center">
+<!-- create branch from existing project -->
+  <form name="branchForm" ng-controller="branchCtrl" action="#" ng-submit="submitForm()" style="padding-top:35px;">
+    <label style="font-size:30px">What is the name of branch?</label>
+    <div style="padding-top:30px;"> 
+    	<input type="text" ng-model="branchName" placeholder="Leaving blank means default master" style="width:300px;height:50px;font-size:20px;font-family:Times New Roman;">
+    </div>
+    <div style="padding-top:30px; padding-left:300px;font-family:Times New Roman;"> 
+    	<input class="btnNext" type="submit"  value="Next">
+  	</div>
+  </form>
+</div>
+
+
+</body>
+</html>
