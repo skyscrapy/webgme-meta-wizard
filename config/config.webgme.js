@@ -8,7 +8,6 @@ var config = require('webgme/config/config.default'),
 
 
 // The paths can be loaded from the webgme-setup.json
-config.plugin.basePaths.push('src/plugins');
 
 
 // Visualizer descriptors
@@ -16,6 +15,5 @@ config.plugin.basePaths.push('src/plugins');
 // Add requirejs paths
 
 
-config.mongo.uri = 'mongodb://127.0.0.1:27017/webgme_meta_wizard'
 validateConfig(config);
 module.exports = config;
