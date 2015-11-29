@@ -1,4 +1,5 @@
 var app = angular.module('webgmeWizard', []);
+
 app.dataModel = {
     projects: null,
     branches: null,
@@ -32,7 +33,17 @@ app.gmeInit = function () {
     });
 };
 
-app.controller('projectCtrl', function ($scope) {
+app.controller('indexCtrl', function ($scope, $window) {
+    $scope.goCreateProject = function () {
+        $window.location.href = "newProject.html"
+    };
+
+    $scope.goOpenProject = function () {
+    };
+
+});
+
+app.controller('newProjectCtrl', function ($scope, $window) {
     $scope.submitForm = function () {
         /* create project from seed*/
         if (app.client) {
@@ -41,13 +52,14 @@ app.controller('projectCtrl', function ($scope) {
                 seedBranch: 'master',
                 projectName: $scope.projectName
             };
-            console.log(parameters);
+            console.log('new project', parameters);
             app.client.seedProject(parameters, function (err, result) {
                 if (err) {
                     console.log(err);
                 }
             });
         }
+        $window.location.href = "newBranch.html"
     };
 });
 

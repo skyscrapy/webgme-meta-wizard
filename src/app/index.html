@@ -17,46 +17,14 @@
 
 </head>
 <body on-gme-init="myInit()">
-<div align="left">
+<div align="center">
 	<img src="img/hearder_logo.png" alt="logo" style="width:100px;height:100px;" >
 	<font size="25" color="red" bold="true">WebGME-Wizard</font>
 </div>
 <hr>
 <div align="center" ng-controller="indexCtrl">
   <button ng-click="goCreateProject()" type="btnCreateProject" class="btnCreateProject" >Create project </button>
-  <button ng-click="goOpenProject()" type="btnCreateProject" class="btnCreateProject" ">Open project </button>
+  <button ng-click="goOpenProject()" type="btnCreateProject" class="btnCreateProject">Open project </button>
 </div>
-
-    <label>You wanna add attribute or edit attribute?</label>
-    <br>
-    <input type="radio" ng-model="form.manageAttr" value="Add">Add
-    <input type="radio" ng-model="form.manageAttr" value="Modify">Modify
-    <hr>
-    <label>Enter attribute name</label>
-    <br>
-    <input type="text" ng-model="form.addAttrName" placeholder="Enter name of Attribute">
-    <br>
-    <label>Enter value</label>
-    <br>
-    <input type="text" ng-model="form.addAttrVal" placeholder="Enter value of Attribute">
-    <br>
-    <hr>
-    <label>Select the attribute</label>
-    <br>
-    <select>
-      <option value="state">state</option>
-    </select>
-    <br>
-    <label>Enter value</label>
-    <br>
-    <input type="text" ng-model="form.editAttrVal" placeholder="Enter value of Attribute">
-    <br>
-    <hr>
-    <input type="submit" ng-click="Submit">
-  </form>
-</div>
-<script src="bower_components/angular/angular.js"></script>
-<script src="js/controller.js"></script>
-<script type="text/javascript" src="/extlib/node_modules/webgme/dist/webgme.classes.build.js"></script>
 </body>
 </html>
