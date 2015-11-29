@@ -42,7 +42,7 @@
 			<td>{{$index + 1}}
 			</td>
 			<td>
-				<button class="btnNext" ng-click="getAttr($index)">{{model.modelName}}</button>
+				<button class="btnAdd" ng-click="getAttr($index)">{{model.modelName}}</button>
 			</td>
 		</tr>
 	  </table>
@@ -56,14 +56,18 @@
 				</th>
 				<th >Attribute Value
 				</th>
+				<th>
+				</th>
 			</tr>
 			<tr ng-repeat="attr in attrs" style="width:80px;overflow: hidden;">
 				<td>
 					{{attrList[$index]}}
 				</td>
 				<td>
-					<input type="text" placeholder="{{attr.attrVal}}">
-					<button class="btnSet" ng-click="setAttrVal($index)"></button>
+					<input type="text" style="height:20px; width:100px" placeholder="{{attr.attrVal}}">				
+				</td>
+				<td>
+					<button class="btnSet" ng-click="setAttrVal($index) ">ok</button>
 				</td>
 			</tr>
 		</table>
@@ -72,6 +76,6 @@
 </div>
 <div align="right">
 		 <button class="btnNext" ng-click="submitForm()">Next</button>
-	</div>
+</div>
 </body>
 </html>

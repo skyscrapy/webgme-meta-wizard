@@ -11,9 +11,9 @@ app.controller('indexCtrl', function ($scope, $log, $window) {
     };
 });
 
-app.controller('projectCtrl', function ($scope, $window) {
+app.controller('newprojectCtrl', function ($scope, $window) {
     $scope.submitForm = function () {
-    // TO-DO here we create the project depending on the user's input and then share the project name via angular service
+    // TO-DO here we create the project with the name and then share the project name via angular service
     // so that we can continue to create the branch, models and the detailed attributes of them accordingly
         /* create project from seed*/
         /*
@@ -39,6 +39,16 @@ app.controller('projectCtrl', function ($scope, $window) {
         $window.location.href = "newBranch.html";
     };
     
+});
+
+app.controller('openCtrl', function($scope, $window) {
+	// TO-DO list projects and branches for users to select to open
+	$scope.projects = [];
+	$scope.branches = [];
+	// TO-DO open the project and branch according to the user's selection
+	$scope.submitForm = function (){
+		$window.location.href = "newModel.html";
+	};
 });
 
 app.controller('branchCtrl', function ($scope, $window) {
@@ -90,7 +100,7 @@ app.controller('branchCtrl', function ($scope, $window) {
 
 app.controller('modelsCtrl', function ($scope, $window) {
 	$scope.models = [
-        // at first no metanodes   
+        // TO-DO at first no metanodes if creating a new project, nonetheless we need to load models if opening an existing one
                     ];
 	$scope.addRow = function(){		
 		// TO-DO add the model into our DB using GMEAPI
@@ -133,51 +143,35 @@ app.controller('attrsCtrl', function ($scope, $window) {
 	};                
 	$scope.setAttrVal = function (idx) {
 		// TO-DO read the modified attrVale and store them into DB for update
-		//var attrVal = ;
+		var attrVal = 'modifedVal';
 		var newField = {'attrName':$scope.attrList[idx],'attrVal':attrVal};
-		$scope.attrs.splice(0,1,newField);
+		$scope.attrs.splice(idx,1,newField);
 		//GMEAPI updateAttrValue
 	};
 	$scope.submitForm = function () {
-		$window.location.href = "newRelation.html"
+		$window.location.href = "newRelation.html";
 	};
-    /* list all the projects and branches*/
-    /*
-    var client = new GME.classes.Client(GME.gmeConfig);
+    
+});
 
-    client.connectToDatabase(function (err) {
-        if (err) {
-            console.log(err);
-        }
-        client.getProjectsAndBranches(false, function (err, myProjects) {
-            if (err) {
-                console.log(err);
-            }
-            $scope.projects = myProjects;
-        });
-    });
-
-    $scope.submitForm = function () {
-        var projectId = 'guest+' + $scope.selectedProject;
-
-        client.connectToDatabase(function (err) {
-            if (err) {
-                console.log(err);
-            }
-            client.selectProject(projectId, null, function (err) {
-                if (err) {
-                    console.log(err);
-                }
-                client.getBranches(projectId, function (err, myBranches) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    $scope.branches = myBranches;
-                    console.log($scope.branches);
-                });
-            });
-        });
-    };
-    */
+app.controller('relationsCtrl', function ($scope, $window) {
+	/* TO-DO we need to list all the models so as to select the src and the dst node to add connection
+	*/
+	$scope.relations = [
+        
+                    ];
+	$scope.addRelation = function (){
+	    // TO-DO modify the value
+		$scope.relations.push({'relationsrc':'Train','relationdst':'Track'});
+	};
+	$scope.deleteRelation = function (idx){
+		var delRelation = $scope.relations[idx];
+		// TO-DO delete the relation
+        $scope.relations.splice(idx, 1);
+	};
+	$scope.submitForm = function () {
+		$window.location.href = "index.html";
+	};
+  
     
 });
