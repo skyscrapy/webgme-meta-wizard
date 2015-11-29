@@ -2,9 +2,8 @@
 <head>
   <meta charset="utf-8">
   <title>Web GME Meta Wizard</title>
-  <script type="text/javascript" src="/extlib/node_modules/webgme/dist/webgme.classes.build.js"></script>
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="js/controller.js"></script>
+  <!--<script type="text/javascript" src="/extlib/node_modules/webgme/dist/webgme.classes.build.js"></script>-->
+
 
   <script type="text/javascript">
     var myInit = function () {
@@ -17,7 +16,8 @@
 
 </head>
 
-<body on-gme-init="myInit()">
+<body on-gme-init="app.gmeInit()">
+<!--<body on-gme-init="angular.bootstrap(document, ['webgmeWizard']);">-->
 <p align="center">WebGME-Wizard</p>
 <hr>
 <div>
@@ -36,16 +36,32 @@
   <form name="branchForm" ng-controller="branchCtrl" action="#" ng-submit="submitForm()">
     <label>I want to create a branch from project </label>
     <select ng-model="projectName">
-      <option ng-repeat="project in projects">{{project.name}}</option>
+      <option ng-repeat="project in dataModel.projects">{{project.name}}</option>
     </select>
     <label> with the branch name</label>
     <input type="text" ng-model="branchName" placeholder="Enter name of branch here">
-
     <p>Your want to add a new branch <b>{{branchName}}</b> in <b>{{projectName}}</b> project</p>
     <input type="submit" value="Create branch">
   </form>
   <hr>
 
+  <!-- going into one branch of one project -->
+  <form name="territoryForm" ng-controller="territoryCtrl" action="#" ng-submit="loadTerritory()">
+    <p>
+      <label>I'd like to load project: </label>
+      <select ng-model="selectedProject">
+        <option ng-repeat="project in dataModel.projects">{{project.name}}</option>
+      </select>
+      <input type="button" value="Get branches" ng-click="getBranches()">
+      <select ng-model="selectedBranch">
+        <option ng-repeat="branch in dataModel.branches">{{branch.name}}</option>
+      </select>
+      <br/>
+      <input type="submit" value="Load Territory">
+    </p>
+  </form>
+
+  <hr>
   <!-- modify a node in selected branch, project -->
   <form name="attributesForm" ng-controller="attributesCtrl" action="#" ng-submit="submitForm()">
     <p>
@@ -57,7 +73,7 @@
       </select>
       <label> a node from project </label>
       <select ng-model="selectedProject">
-        <option ng-repeat="project in projects">{{project.name}}</option>
+        <option ng-repeat="(projectId, project) in dataModel.projects">{{projectId}}</option>
       </select>
       <label> branch </label>
     </p>
@@ -92,6 +108,8 @@
     <input type="submit" ng-click="Submit">
   </form>
 </div>
-
+<script src="bower_components/angular/angular.js"></script>
+<script src="js/controller.js"></script>
+<script type="text/javascript" src="/extlib/node_modules/webgme/dist/webgme.classes.build.js"></script>
 </body>
 </html>

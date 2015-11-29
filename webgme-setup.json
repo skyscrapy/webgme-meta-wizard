@@ -1,4 +1,13 @@
 {
-  "components": {},
-  "dependencies": {}
+  "components": {
+    "plugins": {
+      "CodeGenerator": {
+        "src": "src/plugins/CodeGenerator",
+        "test": "test/plugins/CodeGenerator"
+      }
+    }
+  },
+  "dependencies": {
+    "plugins": {}
+  }
 }
