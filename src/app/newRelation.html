@@ -1,0 +1,69 @@
+<html lang="en" ng-app="webgmeWizard">
+<head>
+  <meta charset="utf-8">
+  <title>Web GME Meta Wizard</title>
+  <script type="text/javascript" src="/extlib/node_modules/webgme/dist/webgme.classes.build.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="js/controller.js"></script>
+  <link rel="stylesheet" href="css/app.css" type="text/css">
+  <script type="text/javascript">
+    var myInit = function () {
+      console.log('myInit function was called');
+      // you can use GME.classes.Client from this point
+      console.log(GME);
+      // TODO: add some client examples
+    };
+  </script>
+
+</head>
+
+<body on-gme-init="myInit()" ng-controller="relationsCtrl">
+<div>
+	<img src="img/hearder_logo.png" alt="logo" style="width:100px;height:100px;" >
+	<font size="25" color="red" bold="true">WebGME-Wizard</font>
+	<label style="font-size:25px;margin-left:30px;align:right">Your Domain--Your Branch</label>
+</div>
+<hr>
+<div style="height:50px;">
+</div>
+<div align="center">
+	 <!-- add connection(relationship) between src to dst -->
+  <form name="relationsForm" action="#" ng-submit="addRelation()">
+      <label style="font-size:25px;"> Add a relation from </label>
+      <select ng-model="selectedProject">
+        <option ng-repeat="src in models">{{src.name}}</option>
+      </select>
+      <label style="font-size:25px;"> to </label>
+      <select ng-model="selectedProject">
+        <option ng-repeat="dst in models">{{dst.name}}</option>
+      </select>
+    <input type="submit" value="Add" class="btnAdd">
+  </form>
+</div>
+<div align="center" style="height:300px; overflow:auto;">
+  <table class="bordered" style="table-layout:fixed; width:600px;">
+	<tr style="width:80px;overflow: hidden;">
+		<th>src
+		</th>
+		<th>dst
+		</th>
+		<th>
+		</th>
+	</tr>
+	<tr ng-repeat="relation in relations" style="width:80px;overflow: hidden;">
+		<td>{{relation.relationsrc}}
+		</td>
+		<td>{{relation.relationdst}}
+		</td>
+		<td>
+			<button ng-click="deleteRelation($index)" value="delete" class="btnDel">delete</button>
+		</td>
+	</tr>
+</table>
+</div>
+<div align="right">
+	<button ng-click="submitForm()" value="Finish" class="btnNext">Finish</button>
+</div>
+
+</body>
+</html>

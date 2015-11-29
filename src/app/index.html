@@ -5,7 +5,7 @@
   <script type="text/javascript" src="/extlib/node_modules/webgme/dist/webgme.classes.build.js"></script>
   <script src="bower_components/angular/angular.js"></script>
   <script src="js/controller.js"></script>
-
+  <link rel="stylesheet" href="css/app.css" type="text/css">
   <script type="text/javascript">
     var myInit = function () {
       console.log('myInit function was called');
@@ -16,53 +16,16 @@
   </script>
 
 </head>
-
 <body on-gme-init="myInit()">
-<p align="center">WebGME-Wizard</p>
+<div align="left">
+	<img src="img/hearder_logo.png" alt="logo" style="width:100px;height:100px;" >
+	<font size="25" color="red" bold="true">WebGME-Wizard</font>
+</div>
 <hr>
-<div>
-  <!-- create project&branch -->
-  <form name="projectForm" ng-controller="projectCtrl" action="#" ng-submit="submitForm()">
-    <label>What is your new domain?</label>
-    <br>
-    <input type="text" ng-model="projectName" placeholder="Enter name of project here">
-
-    <p>Domain name: <b>{{projectName}}</b></p>
-    <input type="submit" value="Create domain">
-  </form>
-  <hr>
-
-  <!-- create branch from existing project -->
-  <form name="branchForm" ng-controller="branchCtrl" action="#" ng-submit="submitForm()">
-    <label>I want to create a branch from project </label>
-    <select ng-model="projectName">
-      <option ng-repeat="project in projects">{{project.name}}</option>
-    </select>
-    <label> with the branch name</label>
-    <input type="text" ng-model="branchName" placeholder="Enter name of branch here">
-
-    <p>Your want to add a new branch <b>{{branchName}}</b> in <b>{{projectName}}</b> project</p>
-    <input type="submit" value="Create branch">
-  </form>
-  <hr>
-
-  <!-- modify a node in selected branch, project -->
-  <form name="attributesForm" ng-controller="attributesCtrl" action="#" ng-submit="submitForm()">
-    <p>
-      <label>I want to </label>
-      <select ng-model="selectedOperation">
-        <option value="add">add</option>
-        <option value="modify">modify</option>
-        <option value="delete">delete</option>
-      </select>
-      <label> a node from project </label>
-      <select ng-model="selectedProject">
-        <option ng-repeat="project in projects">{{project.name}}</option>
-      </select>
-      <label> branch </label>
-    </p>
-    <input type="submit" value="Apply operation">
-    <hr>
+<div align="center" ng-controller="indexCtrl">
+  <button ng-click="goCreateProject()" type="btnCreateProject" class="btnCreateProject" >Create project </button>
+  <button ng-click="goOpenProject()" type="btnCreateProject" class="btnCreateProject" ">Open project </button>
+</div>
 
     <label>You wanna add attribute or edit attribute?</label>
     <br>
@@ -92,6 +55,8 @@
     <input type="submit" ng-click="Submit">
   </form>
 </div>
-
+<script src="bower_components/angular/angular.js"></script>
+<script src="js/controller.js"></script>
+<script type="text/javascript" src="/extlib/node_modules/webgme/dist/webgme.classes.build.js"></script>
 </body>
 </html>

@@ -1,0 +1,45 @@
+<html lang="en" ng-app="webgmeWizard">
+<head>
+  <meta charset="utf-8">
+  <title>Web GME Meta Wizard</title>
+  <script type="text/javascript" src="/extlib/node_modules/webgme/dist/webgme.classes.build.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="js/controller.js"></script>
+  <link rel="stylesheet" href="css/app.css" type="text/css">
+  <script type="text/javascript">
+    var myInit = function () {
+      console.log('myInit function was called');
+      // you can use GME.classes.Client from this point
+      console.log(GME);
+      // TODO: add some client examples
+    };
+  </script>
+</head>
+
+<body on-gme-init="myInit()" ng-controller="openCtrl">
+<div>
+	<img src="img/hearder_logo.png" alt="logo" style="width:100px;height:100px;" >
+	<font size="25" color="red" bold="true">WebGME-Wizard</font>
+</div>
+<hr>
+<div style="height:50px;">
+</div>
+<div align="center" >
+	 <!-- add connection(relationship) between src to dst -->
+  <form name="openprojectForm" action="#" ng-submit="submitForm()">
+      <label style="font-size:25px;"> Open a project from </label>
+      <select ng-model="selectedProject">
+        <option ng-repeat="project in projects">{{project}}</option>
+      </select>
+      <label style="font-size:25px;">(Project) & </label>
+      <select ng-model="selectedBranch">
+        <option ng-repeat="branch in branches">{{branch}}</option>
+      </select>
+      <label style="font-size:25px;">(Branch)</label>  
+      <input type="submit" value="Open" class="btnAdd">
+  </form>
+  
+</div>
+
+</body>
+</html>
