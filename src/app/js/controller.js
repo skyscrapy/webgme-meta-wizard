@@ -1,15 +1,28 @@
-var app = angular.module('webgmeWizard', []);
-
+var app = angular.module('webgmeWizard', ['ngRoute']);
+    
 app.controller('indexCtrl', function ($scope, $log, $window) {
     $scope.goCreateProject = function () {
         $log.log('new project');
-        $window.location.href = "newProject.html";
     };
     $scope.goOpenProject = function () {
         $log.log('open project');
-        $window.location.href = "openProject.html";
     };
-});
+}).config(
+  function($routeProvider, $locationProvider) {
+    $routeProvider.
+      when('/newProject', {
+        templateUrl: '/newProject.html',
+        controller: 'newprojectCtrl'
+      }).
+      when('/openProject', {
+        templateUrl: '/openProject.html',
+        controller: 'openCtrl'
+      }).
+      otherwise({
+        templateUrl: '/startPage.html',
+        controller: 'indexCtrl'
+      });
+  });
 
 app.controller('newprojectCtrl', function ($scope, $window) {
     $scope.submitForm = function () {
@@ -36,19 +49,28 @@ app.controller('newprojectCtrl', function ($scope, $window) {
             });
         });
         */
-        $window.location.href = "newBranch.html";
     };
     
+}).config(
+  function($routeProvider, $locationProvider) {
+    $routeProvider.
+      when('/newBranch', {
+      	templateUrl: '/newBranch.html',
+      	controller: 'branchCtrl'
+      });
 });
 
 app.controller('openCtrl', function($scope, $window) {
 	// TO-DO list projects and branches for users to select to open
 	$scope.projects = [];
 	$scope.branches = [];
-	// TO-DO open the project and branch according to the user's selection
-	$scope.submitForm = function (){
-		$window.location.href = "newModel.html";
-	};
+}).config(
+  function($routeProvider, $locationProvider) {
+    $routeProvider.
+      when('/newModel', {
+      	templateUrl: '/newModel.html',
+      	controller: 'modelsCtrl'
+      });
 });
 
 app.controller('branchCtrl', function ($scope, $window) {
@@ -94,8 +116,14 @@ app.controller('branchCtrl', function ($scope, $window) {
             });
         });
         */
-        $window.location.href = "newModel.html";
     };
+}).config(
+  function($routeProvider, $locationProvider) {
+    $routeProvider.
+      when('/newModel', {
+      	templateUrl: '/newModel.html',
+      	controller: 'modelsCtrl'
+      });
 });
 
 app.controller('modelsCtrl', function ($scope, $window) {
@@ -116,10 +144,15 @@ app.controller('modelsCtrl', function ($scope, $window) {
     //});
 	};
 
-	$scope.submitForm = function () {
-		$window.location.href = "newAttrs.html";
-	};
+}).config(
+  function($routeProvider, $locationProvider) {
+    $routeProvider.
+      when('/newAttrs', {
+      	templateUrl: '/newAttrs.html',
+      	controller: 'attrsCtrl'
+      });
 });
+
 app.controller('attrsCtrl', function ($scope, $window) {
 	/* TO-DO we need to list all models at the left side of webpage at first. Then if the user clicks on the model, we need to display 
 	   the editing attributes at the right of the page such as ID, Name, MetaTypes so on so forth.
@@ -148,10 +181,14 @@ app.controller('attrsCtrl', function ($scope, $window) {
 		$scope.attrs.splice(idx,1,newField);
 		//GMEAPI updateAttrValue
 	};
-	$scope.submitForm = function () {
-		$window.location.href = "newRelation.html";
-	};
     
+}).config(
+  function($routeProvider, $locationProvider) {
+    $routeProvider.
+      when('/newRelation', {
+      	templateUrl: '/newRelation.html',
+      	controller: 'relationsCtrl'
+      });
 });
 
 app.controller('relationsCtrl', function ($scope, $window) {
@@ -174,4 +211,11 @@ app.controller('relationsCtrl', function ($scope, $window) {
 	};
   
     
+}).config(
+  function($routeProvider, $locationProvider) {
+    $routeProvider.
+      when('/finish', {
+      	templateUrl: '/index.html',
+      	controller: 'indexCtrl'
+      });
 });

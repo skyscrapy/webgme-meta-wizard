@@ -4,6 +4,7 @@
   <title>Web GME Meta Wizard</title>
   <script type="text/javascript" src="/extlib/node_modules/webgme/dist/webgme.classes.build.js"></script>
   <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="js/controller.js"></script>
   <link rel="stylesheet" href="css/app.css" type="text/css">
   <script type="text/javascript">
@@ -24,8 +25,7 @@
 </div>
 <hr>
 <div align="center" ng-controller="indexCtrl">
-  <button ng-click="goCreateProject()" type="btnCreateProject" class="btnCreateProject" >Create project </button>
-  <button ng-click="goOpenProject()" type="btnCreateProject" class="btnCreateProject" ">Open project </button>
+    <div ng-view></div>
 </div>
 
 
