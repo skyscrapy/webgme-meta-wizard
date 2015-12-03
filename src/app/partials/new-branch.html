@@ -1,15 +1,13 @@
-<div height="100"></div>
 <div align="center">
+  <label style="font-size:25px">Create branch</label>
 <!-- create branch from existing project -->
-  <form name="branchForm" ng-controller="branchCtrl" action="#" ng-submit="submitForm()" style="padding-top:35px;">
+  <form name="branchForm" ng-submit="submitForm()" style="padding-top:35px;">
     <label style="font-size:30px">What is the name of branch?</label>
     <div style="padding-top:30px;"> 
     	<input type="text" ng-model="branchName" placeholder="Leaving blank means default master" style="width:300px;height:50px;font-size:20px;font-family:Times New Roman;">
     </div>
     <div style="padding-top:30px; padding-left:300px;font-family:Times New Roman;"> 
-    	<a href="#/newModel">
-    		<input class="btnNext" type="submit"  value="Next">
-  		</a>
+    	<input class="btnNext" type="submit"  value="Next">
   	</div>
   </form>
 </div>

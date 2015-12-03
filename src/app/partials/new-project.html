@@ -1,16 +1,14 @@
-<div height="100"></div>
 <div align="center">
+  <label style="font-size:25px">Create project</label>
 	 <!-- create project -->
-  <form name="projectForm" ng-controller="newprojectCtrl" action="#" ng-submit="submitForm()" style="padding-top:35px;">
+  <form name="projectForm" ng-submit="submitForm()" style="padding-top:35px;">
     <label style="font-size:30px">What is your new domain?</label>
     <br>
     <div style="padding-top:30px;"> 
     	<input type="text" ng-model="projectName" placeholder="Enter name of domain here" style="width:300px;height:50px;font-size:20px;font-family:Times New Roman;"> 
     </div> 
     <div style="padding-top:30px; padding-left:300px;font-family:Times New Roman;"> 
-    	<a href="#/newBranch">
-    		<input class="btnNext" type="submit"  value="Next">
-    	</a>
+    	<input class="btnNext" type="submit"  value="Next">
   	</div>
   </form>
 </div>

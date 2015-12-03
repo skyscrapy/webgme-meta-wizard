@@ -1,0 +1,37 @@
+<div align="center">
+  <label style="font-size:25px">Add your MetaNode</label>
+
+  <form ng-submit="addRow()" style="margin-top:20px;">
+    <input type="button" value="Get" class="btnAdd" ng-click="getNodes()">
+    <input type="text" ng-model="childName" placeholder="Input your meta node name"
+           style="width:300px;height:50px;font-size:20px;font-family:Times New Roman;">
+    <input type="submit" value="Add" class="btnAdd">
+  </form>
+</div>
+
+<div align="center" style="height:300px; overflow:auto;">
+  <table class="bordered" style="table-layout:fixed; width:600px;">
+    <tr style="width:80px;overflow: hidden;">
+      <th>No.
+      </th>
+      <th>Name
+      </th>
+      <th>Operation
+      </th>
+    </tr>
+    <tr ng-repeat="model in models" style="width:80px;overflow: hidden;">
+      <td>{{$index + 1}}
+      </td>
+      <td>{{model.getAttribute('name');}}
+      </td>
+      <td>
+        <button ng-click="modifyNode(model)" value="modify" class="btnSet">modify</button>
+        <button ng-click="deleteNode(model)" value="delete" class="btnDel">delete</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div align="right">
+  <button class="btnNext" ng-click="submitForm()" value="next">Next</button>
+</div>
