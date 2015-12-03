@@ -1,0 +1,17 @@
+<div align="center">
+  <!-- add connection(relationship) between src to dst -->
+  <form name="openProjectForm" ng-submit="submitForm()">
+    <label style="font-size:25px;"> Open a project from </label>
+    <select ng-model="selectedProject">
+      <option ng-repeat="project in projects">{{project.name}}</option>
+    </select>
+    <label style="font-size:25px;">(Project) & </label>
+    <select ng-model="selectedBranch">
+      <option ng-repeat="(branchName, hashCode) in branches">{{branchName}}</option>
+    </select>
+    <label style="font-size:25px;">(Branch)</label>
+    <input type="button" value="Get" class="btnAdd" ng-click="getBranches()">
+    <input type="submit" value="Open" class="btnAdd">
+  </form>
+
+</div>

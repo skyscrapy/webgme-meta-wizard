@@ -1,0 +1,44 @@
+<div align="center">
+  <label style="font-size:30px">Modify your node: {{selectedNode.getAttribute('name')}}</label>
+  <form ng-submit="addAttr()" style="margin-top:20px;">
+    <input type="button" value="Refresh" class="btnAdd" ng-click="refresh()">
+    <input type="text" ng-model="attrName" placeholder="Input your attribute name"
+           style="width:300px;height:50px;font-size:20px;font-family:Times New Roman;">
+    <select ng-model="attrType">
+      <option ng-repeat="type in types">{{type}}</option>
+    </select>
+    <input type="submit" value="Add" class="btnAdd">
+  </form>
+</div>
+
+<div align="center">
+  <div style="height:300px; overflow:auto;">
+    <table align="center" class="bordered" style="table-layout:fixed; width:700px;">
+      <tr>
+        <th>Attribute Name
+        </th>
+        <th>Attribute Value
+        </th>
+        <th>Operation
+        </th>
+      </tr>
+      <tr ng-repeat="attrName in attrNames" style="width:80px;overflow: hidden;">
+        <td>
+          {{attrName}}
+        </td>
+        <td>
+          <input type="text" ng-model="attrValues[attrName]" placeholder="{{selectedNode.getAttribute(attrName)}}"
+                 style="width:100px;height:30px;font-size:20px;">
+        </td>
+        <td>
+          <button class="btnSet" ng-click="setAttrVal(attrName)">set</button>
+          <button class="btnSet" ng-click="resetAttr(attrName)">reset</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div align="right">
+    <button class="btnNext" ng-click="goBack()">back</button>
+  </div>
+</div>

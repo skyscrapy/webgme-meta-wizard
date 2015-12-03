@@ -1,145 +1,282 @@
-var app = angular.module('webgmeWizard', []);
+var wizardControllers = angular.module('wizardControllers', []);
 
-app.dataModel = {
-    projects: null,
-    branches: null,
-    selectedProject: null,
-    selectedBranch: null
-};
+var patterns = {};
+patterns[''] = {children: 1};
 
-app.client = null;
-
-app.run(function () {
-    console.log("GME run", GME);
-    console.log("Data model", app.dataModel);
-});
-
-app.gmeInit = function () {
-    console.log('GME init app', GME);
-    var client = new GME.classes.Client(GME.gmeConfig);
-
-    client.connectToDatabase(function (err) {
-        if (err) {
-            console.log(err);
-        }
-        app.client = client;
-        console.log("Connected to database", app.client);
-        app.client.getProjectsAndBranches(false, function (err, myProjects) {
-            if (err) {
-                console.log(err);
-            }
-            app.dataModel.projects = myProjects;
-        });
-    });
-};
-
-app.controller('indexCtrl', function ($scope, $window) {
-    $scope.goCreateProject = function () {
-        $window.location.href = "newProject.html"
-    };
-
-    $scope.goOpenProject = function () {
-    };
-
-});
-
-app.controller('newProjectCtrl', function ($scope, $window) {
-    $scope.submitForm = function () {
-        /* create project from seed*/
-        if (app.client) {
-            var parameters = {
-                seedName: 'guest+seed',
-                seedBranch: 'master',
-                projectName: $scope.projectName
-            };
-            console.log('new project', parameters);
-            app.client.seedProject(parameters, function (err, result) {
-                if (err) {
-                    console.log(err);
-                }
-            });
-        }
-        $window.location.href = "newBranch.html"
-    };
-});
-
-app.controller('branchCtrl', function ($scope) {
-    $scope.submitForm = function () {
-        /* create branch from existing project */
-        var projectId = 'guest+' + $scope.projectName,
-            newBranch = $scope.branchName,
-            newHash;
-        if (app.client) {
-            app.client.selectProject(projectId, null, function (err) {
-                if (err) {
-                    console.log(err);
-                }
-                newHash = app.client.getActiveCommitHash();
-                app.client.createBranch(projectId, newBranch, newHash, function (err) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    console.log("new branch created");
-                });
-            });
-        }
-    };
-});
-
-app.controller('territoryCtrl', function ($scope) {
-    var projectId = null;
-    $scope.getBranches = function () {
-        if (app.client) {
-            projectId = 'guest+' + $scope.selectedProject;
-            app.client.selectProject(projectId, null, function (err) {
-                if (err) {
-                    console.log(err);
-                }
-                app.client.getBranches(projectId, function (err, myBranches) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    app.dataModel.branches = myBranches;
-                    console.log(app.dataModel);
-                });
-
-            })
-        }
-    };
-
-    $scope.loadTerritory = function () {
-        if(app.client) {
-            app.dataModel.selectedProject = $scope.selectedProject;
-            app.dataModel.selectedBranch = $scope.selectedBranch;
-            console.log("good");
+var eventHandler = function (events) {
+    var i, nodeObj;
+    for (i = 0; i < events.length; i += 1) {
+        if (events[i].etype === 'load') {
+            nodeObj = wizardApp.client.getNode(events[i].eid);
+            console.log('eventHandler load', nodeObj);
+        } else if (events[i].etype === 'update') {
+            nodeObj = wizardApp.client.getNode(events[i]);
+            console.log('eventHandler update', nodeObj);
+        } else if (events[i].etype === 'unload') {
+            console.log('eventHandler', 'unload');
         } else {
-            console.log("bad");
+            console.log('eventHandler', 'else');
         }
-    };
-});
+    }
+};
 
+wizardControllers.controller('IndexCtrl', ['$scope', '$location',
+    function ($scope, $location) {
+        $scope.goCreateProject = function () {
+            $location.path('/newProject');
+        };
 
-app.controller('attributesCtrl', function ($scope) {
-    /* list all the projects and branches*/
-    $scope.submitForm = function () {
-        /* create project from seed*/
-        var projectId = 'guest+' + $scope.selectedProject;
-        client.connectToDatabase(function (err) {
-            if (err) {
-                console.log(err);
-            }
-            client.selectProject(projectId, null, function (err) {
-                if (err) {
-                    console.log(err);
-                }
-                client.getBranches(projectId, function (err, myBranches) {
+        $scope.goOpenProject = function () {
+            $location.path('/openProject');
+        };
+    }]);
+
+wizardControllers.controller('NewProjectCtrl', ['$scope', '$location',
+    function ($scope, $location) {
+        $scope.submitForm = function () {
+            /* create project from seed*/
+            if (wizardApp.client) {
+                var parameters = {
+                    seedName: 'guest+seed',
+                    seedBranch: 'master',
+                    projectName: $scope.projectName
+                };
+                wizardApp.client.seedProject(parameters, function (err, result) {
+                    console.log('creating project..');
                     if (err) {
                         console.log(err);
                     }
-                    $scope.branches = myBranches;
-                    console.log($scope.branches);
                 });
-            });
-        });
-    };
-});
+                wizardApp.dataModel.selectedProject = 'guest+'+parameters.projectName;
+                $location.path('/newBranch');
+            }
+        };
+    }]);
+
+wizardControllers.controller('NewBranchCtrl', ['$scope', '$location',
+    function ($scope, $location) {
+        $scope.submitForm = function () {
+            /* create branch from existing project */
+            var projectId =wizardApp.dataModel.selectedProject,
+                newBranch,
+                newHash;
+
+            if ($scope.branchName) {
+                newBranch = $scope.branchName;
+                if (wizardApp.client) {
+                    wizardApp.client.selectProject(projectId, null, function (err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        newHash = wizardApp.client.getActiveCommitHash();
+                        wizardApp.client.createBranch(projectId, newBranch, newHash, function (err) {
+                            console.log("creating new branch..");
+                            if (err) {
+                                console.log(err);
+                            }
+                        });
+                    });
+                }
+            } else {
+                newBranch = 'master';
+            }
+            wizardApp.dataModel.selectedBranch = newBranch;
+            console.log(wizardApp.dataModel);
+            $location.path('/newModel');
+        };
+    }]);
+
+wizardControllers.controller('NewModelCtrl', ['$scope', '$location',
+    function ($scope, $location) {
+        $scope.getNodes = function () {
+            wizardApp.client.selectProject(wizardApp.dataModel.selectedProject,
+                wizardApp.dataModel.selectedBranch,
+                function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    $scope.models = wizardApp.client.getAllMetaNodes();
+                })
+        };
+
+        $scope.addRow = function () {
+            var childName = $scope.childName;
+            if (childName) {
+                wizardApp.client.startTransaction();
+                wizardApp.client.updateTerritory(wizardApp.userId, patterns);
+                var childCreationParams = {
+                    parentId: '',
+                    baseId: '/1'
+                };
+                var rootNode = wizardApp.client.getNode('');
+                var sheetId = (rootNode.getSetNames())[1];
+
+                var childId = wizardApp.client.createChild(childCreationParams, 'create child');
+                wizardApp.client.setAttributes(childId, 'name', childName, 'set attributes');
+                //wizardApp.client.setRegistry(childId, 'position', {x: 200, y:200}, 'set registry');
+                wizardApp.client.addMember('', childId, 'MetaAspectSet', 'add member2');
+                wizardApp.client.setMemberRegistry('', childId, 'MetaAspectSet', 'position', {
+                    x: 400,
+                    y: 400
+                }, 'member registry');
+                wizardApp.client.addMember('', childId, sheetId, 'add member1');
+                wizardApp.client.setMemberRegistry('', childId, sheetId, 'position', {
+                    x: 400,
+                    y: 400
+                }, 'member registry');
+                wizardApp.client.completeTransaction('transaction complete', function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
+            } else {
+                alert('please enter the name');
+            }
+        };
+
+        $scope.modifyNode = function (model) {
+            wizardApp.dataModel.selectedNode = model;
+            $location.path('/attributes');
+        };
+
+        $scope.deleteNode = function(model) {
+            if (model) {
+                var rootNode = wizardApp.client.getNode('');
+                var sheetId = (rootNode.getSetNames())[1];
+                wizardApp.client.updateTerritory(wizardApp.userId, patterns);
+                wizardApp.client.startTransaction();
+
+                console.log(sheetId, model.getId());
+
+                wizardApp.client.removeMember('', model.getId(), 'MetaAspectSet', 'remove node');
+                wizardApp.client.removeMember('', model.getId(), sheetId, 'remove node');
+                wizardApp.client.delMoreNodes([model.getId()], 'delete node');
+
+                wizardApp.client.completeTransaction('transaction complete', function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+
+                });
+            }
+        };
+
+        $scope.submitForm = function () {
+
+        };
+    }]);
+
+wizardControllers.controller('OpenProjectCtrl', ['$scope', '$location',
+    function ($scope, $location) {
+        var projectId = null;
+        $scope.getBranches = function () {
+            $scope.projects = wizardApp.dataModel.projects;
+            if ($scope.selectedProject) {
+                wizardApp.dataModel.selectedProject = 'guest+' + $scope.selectedProject;
+                if (wizardApp.client) {
+                    projectId = wizardApp.dataModel.selectedProject;
+                    wizardApp.client.selectProject(projectId, null, function (err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        wizardApp.client.getBranches(projectId, function (err, myBranches) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            wizardApp.dataModel.branches = myBranches;
+                            $scope.branches = wizardApp.dataModel.branches;
+                            if ($scope.selectedBranch) {
+                                wizardApp.dataModel.selectedBranch = $scope.selectedBranch;
+                            }
+                        });
+                    })
+                }
+            }
+            console.log(wizardApp.dataModel);
+        };
+
+        $scope.submitForm = function () {
+            wizardApp.userId = wizardApp.client.addUI(null, eventHandler);
+            wizardApp.client.updateTerritory(wizardApp.userId, patterns);
+            console.log(wizardApp.dataModel);
+            $location.path('/newModel');
+        };
+    }]);
+
+
+wizardApp.controller('AttributeCtrl', ['$scope', '$location',
+    function ($scope, $location) {
+        $scope.selectedNode = wizardApp.dataModel.selectedNode;
+        $scope.attrNames = wizardApp.dataModel.selectedNode.getValidAttributeNames();
+        $scope.attrValues = {};
+        $scope.types = ['string', 'integer', 'float', 'asset'];
+
+        $scope.setAttrVal = function(attrName){
+            var newName = $scope.attrValues[attrName];
+            if (newName) {
+                wizardApp.client.startTransaction();
+                wizardApp.client.updateTerritory(wizardApp.userId, patterns);
+
+                var nodeId = $scope.selectedNode.getId();
+                wizardApp.client.setAttributes(nodeId, attrName, newName, 'set attributes');
+                wizardApp.client.completeTransaction('transaction complete', function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+
+                });
+            } else {
+                alert('no change');
+            }
+        };
+
+        $scope.resetAttr = function(attrName){
+            var myNode = wizardApp.dataModel.selectedNode;
+            if (myNode) {
+                wizardApp.client.updateTerritory(wizardApp.userId, patterns);
+                wizardApp.client.startTransaction();
+
+                wizardApp.client.delAttributes(myNode.getId(), attrName, 'reset attr');
+
+                wizardApp.client.completeTransaction('transaction complete', function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+
+                });
+            }
+        };
+
+        $scope.refresh = function () {
+            wizardApp.client.updateTerritory(wizardApp.userId, patterns);
+        };
+
+
+        $scope.addAttr = function () {
+            var myAttrName = $scope.attrName;
+            var myType = $scope.attrType;
+            var myNode = wizardApp.dataModel.selectedNode;
+            if(myAttrName && myType) {
+                wizardApp.client.updateTerritory(wizardApp.userId, patterns);
+
+                wizardApp.client.startTransaction();
+
+                wizardApp.client.setAttributeSchema(myNode.getId(), myAttrName, {
+                    type: myType
+                });
+
+                wizardApp.client.completeTransaction('transaction complete', function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+
+                });
+            } else {
+                alert('validation failed')
+            }
+        };
+
+        $scope.goBack = function () {
+            $location.path('/newModel');
+        };
+    }]);
